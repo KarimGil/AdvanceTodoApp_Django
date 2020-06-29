@@ -1,13 +1,16 @@
-{% extends 'base.html' %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link href="{% static 'css/accounts.css' %}" type="text/css" rel="stylesheet" />
+
 </head>
 <body>
-{% block content %}
+{% comment %} {% block content %}
 <h1>SIGN UP</h1>
 <h2>{{error}}</h2>
 
@@ -17,6 +20,43 @@
     <button type="submit">Sign Up</button>
     
 </form>
-{% endblock content %}
+{% endblock content %} {% endcomment %}
+
+<div class="sidenav">
+         <div class="login-main-text">
+            <h2><strong>TodoWoo</strong><br> Register Page</h2>
+            <p>Login or register from here to access.</p>
+         </div>
+      </div>
+      <div class="main">
+         <div class="col-md-6 col-sm-12">
+            <div class="login-form">
+               <form method="POST">
+               {% csrf_token %}
+                  <div class="form-group">
+                     <label>User Name</label>
+                     <input type="text" class="form-control" placeholder="User Name" name="username">
+                  </div>
+                  <div class="form-group">
+                     <label>Password</label>
+                     <input type="password" class="form-control" placeholder="Password" name="password1">
+                  </div>
+                  <div class="form-group">
+                     <label>Confirm Password</label>
+                     <input type="password" class="form-control" placeholder="Confirm Password" name="password2">
+                  </div>
+                  <button type="submit" class="btn btn-secondary">Register</button>
+                  
+                  
+               </form>
+            </div>
+            <br>
+            <p>Already have a account?</p>
+            <a href="{% url 'loginuser' %}">Login!</a>
+            <br>
+            <br>
+         </div>
+      </div>
+
 </body>
 </html>
