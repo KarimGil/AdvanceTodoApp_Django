@@ -1,29 +1,83 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>TodoWoo | Completed</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 </head>
 <body>
 
-    Completed Todos
+    {% if user.is_authenticated %}
+
+   <nav class="navbar navbar-expand-md navbar-light" style="background-image:linear-gradient(135deg, rgb(74,13,143)0%, rgba(0,51,255,0.5)100%);
+">
+    <a href="#" class="navbar-brand">
+        {% comment %} <img src="{% static 'img/logo.png' %}" height="28" alt="CoolBrand"> {% endcomment %}
+    </a>
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav">
+            <a href="#" class="nav-item nav-link" style="color:white;"><strong>TodoWoo</strong></a>
+            <a href="{% url 'currenttodos' %}" class="nav-item nav-link" style="color:white;">Current </a>
+            <a href="{% url 'completedtodos' %}" class="nav-item nav-link nav-active" style="color:white;">Completed </a>
+            <a href="{% url 'createtodos' %}" class="nav-item nav-link" style="color:white;">Create</a>
+        </div>
+        <div class="navbar-nav ml-auto">
+            <form action="{% url 'logoutuser' %}" method="POST">
+            {% csrf_token %}
+            {% comment %} <a href="{% url 'logoutuser' %}" class="nav-item nav-link" style="color:white;">Logout</a> {% endcomment %}
+            <button type="submit" class="btn btn-link" style="color:white;">Logout</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+{% endif %}
+    <br>
+    <br>
+
+
+    <div style="margin-left:18%; margin-top:2%;">
+    <h3>
+  Completed Todos
+   <br>
+  <small class="text-muted">List of the tasks that are completed.</small>
+    </h3>
+    </div>
      <ul>
+    <div class="d-flex flex-column" style="margin-left:18%; margin-top:2%;">
+
     {% for todo in todos %}
 
     <li>
     <a href="{% url 'viewtodo' todo.id %}">
     {% if todo.important %}<strong>{% endif %}
-    {{todo.title}}
+     <div class="p-2">{{todo.title}}
     {% if todo.important %}</strong>{% endif %}
     {% if todo.memo %}
      - {{todo.memo}}
      {% endif %}
      {{todo.datecompleted|date:'M j Y H:i'}}
+      <form method = "POST" action="{% url 'deletetodo' todo.id%}" style="margin-top:1%">
+    {% csrf_token %}
+   
+    <button type="submit" class="btn btn-info btn-sm" style="background-color:rgba(0,51,255,0.7);">Delete</button>
+    </form>
+     </div>
      </a>
+      
+    
+
      </li>
 
     {% endfor %}
+    </div>
     
     </ul>
 

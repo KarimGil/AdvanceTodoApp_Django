@@ -1,25 +1,52 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
 
     {% if user.is_authenticated %}
 
-    Logged in as {{user.username}}
+   <nav class="navbar navbar-expand-md navbar-light" style="background-image:linear-gradient(135deg, rgb(74,13,143)0%, rgba(0,51,255,0.5)100%);
+">
+    <a href="#" class="navbar-brand">
+        {% comment %} <img src="{% static 'img/logo.png' %}" height="28" alt="CoolBrand"> {% endcomment %}
+    </a>
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav">
+            <a href="#" class="nav-item nav-link" style="color:white;"><strong>TodoWoo</strong></a>
+            <a href="{% url 'currenttodos' %}" class="nav-item nav-link" style="color:white;">Current </a>
+            <a href="{% url 'completedtodos' %}" class="nav-item nav-link" style="color:white;">Completed </a>
+            <a href="{% url 'createtodos' %}" class="nav-item nav-link" style="color:white;">Create</a>
+        </div>
+        <div class="navbar-nav ml-auto">
+            <form action="{% url 'logoutuser' %}" method="POST">
+            {% csrf_token %}
+            {% comment %} <a href="{% url 'logoutuser' %}" class="nav-item nav-link" style="color:white;">Logout</a> {% endcomment %}
+            <button type="submit" class="btn btn-link" style="color:white;">Logout</button>
+            </form>
+        </div>
+    </div>
+</nav>
+    {% comment %} Logged in as {{user.username}}
     <form action="{% url 'logoutuser' %}" method="POST">
     {% csrf_token %}
     <button type="submit">Logout</button>
     
-    </form>
+    </form> {% endcomment %}
 
-    {% else %}
+    {% comment %} {% else %}
 
     <a href="{% url 'signupuser' %}">Signup</a>
-    <a href="{% url 'loginuser' %}">Login</a>
+    <a href="{% url 'loginuser' %}">Login</a> {% endcomment %}
 
 
     {% endif %}
